@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
-//import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:stea3/models/devotionalModel.dart';
-import 'package:stea3/widgets/conWidgets.dart';
+
+
 class SteaDevotionals extends ChangeNotifier {
 
   final DatabaseReference databaseReference =
-  FirebaseDatabase.instance.reference().child("devotionals");
+  FirebaseDatabase.instance.ref().child("devotionals");
   File _file;
   bool _loading;
 
@@ -85,7 +84,7 @@ Future getPdfUpload()async{
   setLoading(false);
   }
 
-  CreateCryptoRandomString([int length = 32]){
+  createCryptoRandomString([int length = 32]){
     final Random _random = Random.secure();
     var values = List<int>.generate(length, (index) => _random.nextInt(256));
     return base64UrlEncode(values);
@@ -98,7 +97,7 @@ var devotionalModel = {
   "devotionalDescription": devotional.devotionalDescription,
 
 };
-databaseReference.child(CreateCryptoRandomString()).set(devotional).then((value) => print("success"));
+databaseReference.child(createCryptoRandomString()).set(devotional).then((value) => print("success"));
 }
 //   // static Future<File> loadDevotional(String url)async {
 //   //   final refPDF = FirebaseStorage.instance.ref().child(url);
